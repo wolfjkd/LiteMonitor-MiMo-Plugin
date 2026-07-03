@@ -92,9 +92,22 @@
 
 ## Cookie 获取机制
 
-1. **自动获取**：插件会尝试从 Edge 和 Chrome 浏览器的 Cookie 数据库中提取小米 MiMo 的认证 Cookie
-2. **手动输入**：如果浏览器获取失败，可以在插件设置中手动输入 Cookie
-3. **持久化存储**：成功获取的 Cookie 会保存到 `%LOCALAPPDATA%\LiteMonitor\mimo_cookies.txt`，下次启动时自动加载
+### 注意：自动获取功能有限制
+
+由于新版 Edge/Chrome 浏览器启用了 **App Bound Encryption**（应用绑定加密），代码中实现的自动获取逻辑**目前无法正常工作**。浏览器会使用专用密钥加密Cookie，外部程序无法解密。
+
+### 当前可用方式
+
+1. **手动输入**（推荐）：在浏览器中登录后，通过开发者工具复制Cookie，粘贴到插件设置中
+2. **持久化存储**：输入的 Cookie 会自动保存到 `%LOCALAPPDATA%\LiteMonitor\mimo_cookies.txt`，下次启动时自动加载
+
+### Cookie 获取步骤
+
+1. 在浏览器中登录 [platform.xiaomimimo.com](https://platform.xiaomimimo.com)
+2. 按 `F12` 打开开发者工具
+3. 切换到 `Application` → `Cookies` → `https://platform.xiaomimimo.com`
+4. 右键点击任意Cookie → `Copy all`
+5. 将复制的Cookie粘贴到插件设置中
 
 ## 依赖
 
