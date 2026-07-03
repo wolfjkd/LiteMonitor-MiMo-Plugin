@@ -1,0 +1,57 @@
+{
+    "id": "MiMoToken",
+    "meta": {
+        "name": "小米MiMo套餐",
+        "version": "1.0.0",
+        "author": "wolfjkd",
+        "description": "显示小米MiMo Token Plan套餐用量（自动从浏览器获取Cookie）"
+    },
+    "inputs": [
+        {
+            "key": "cookies",
+            "label": "Cookie",
+            "type": "text",
+            "default": "",
+            "placeholder": "留空则自动从浏览器获取",
+            "scope": "global"
+        }
+    ],
+    "execution": {
+        "type": "chain",
+        "interval": 60,
+        "min_interval": 30,
+        "steps": [
+            {
+                "id": "fetch_mimo",
+                "url": "native://mimo?cookies={{cookies}}",
+                "method": "GET",
+                "response_format": "json",
+                "cache_minutes": 5,
+                "extract": {
+                    "plan_used": "plan_used",
+                    "plan_limit": "plan_limit",
+                    "plan_percent": "plan_percent",
+                    "comp_used": "comp_used",
+                    "comp_limit": "comp_limit",
+                    "comp_percent": "comp_percent"
+                }
+            }
+        ]
+    },
+    "outputs": [
+        {
+            "key": "plan",
+            "label": "套餐额度",
+            "short_label": "套餐",
+            "format_val": "{{plan_used}}亿 / {{plan_limit}}亿 ({{plan_percent}}%)",
+            "color": "0"
+        },
+        {
+            "key": "comp",
+            "label": "补偿额度",
+            "short_label": "补偿",
+            "format_val": "{{comp_used}}亿 / {{comp_limit}}亿 ({{comp_percent}}%)",
+            "color": "0"
+        }
+    ]
+}
